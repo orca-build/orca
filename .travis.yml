@@ -1,5 +1,4 @@
 language: php
-sudo: false
 
 cache:
   directories:
@@ -22,4 +21,4 @@ install:
   - cd src && composer install --no-interaction
 
 script:
-  - ./src/vendor/bin/phpunit --configuration=phpunit.xml
+  - php ./src/vendor/bin/phpunit --configuration=phpunit.xml
