@@ -16,6 +16,9 @@ before_install:
 
 install:
   - cd src && composer install --no-interaction
+  - composer show --installed
 
 script:
+  - ls -la
+  - cd src && ls -la
   - php ./src/vendor/bin/phpunit --configuration=phpunit.xml
