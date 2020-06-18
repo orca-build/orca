@@ -19,6 +19,4 @@ install:
   - composer show --installed
 
 script:
-  - ls -la
-  - cd src && ls -la
-  - php ./src/vendor/bin/phpunit --configuration=phpunit.xml
+  - php ./vendor/bin/phpunit --configuration=phpunit.xml
