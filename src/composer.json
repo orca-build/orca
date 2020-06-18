@@ -1,0 +1,28 @@
+{
+    "name": "orca/orca",
+    "description": "docker image generator based on templates",
+    "keywords": ["docker", "template", "generator", "builder"],
+    "authors": [
+        {
+            "name": "Christian Dangl"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "ext-json": "*",
+        "php": ">=7.2",
+        "twig/twig": "^3.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master",
+        "phpunit/phpunit": "^8.5"
+    },
+    "config": {
+        "optimize-autoloader": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Orca\\": "./"
+        }
+    }
+}

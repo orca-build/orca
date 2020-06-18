@@ -1,0 +1,64 @@
+{% set dev_ssh_user = 'sample' %}
+
+## ***********************************************************************
+##  DOCKER FILE
+## ***********************************************************************
+
+FROM {{ baseImage }}
+MAINTAINER Christian Dangl
+
+
+# remember build-date
+RUN date >/build-date.txt
+
+
+
+
+## ***********************************************************************
+##  USER MANAGEMENT
+## ***********************************************************************
+
+# set easy root pwd for dev purpose
+RUN echo "root:root" | chpasswd
+
+# set password for www-data, and also
+# avoid shell login (we have a separate user for that)
+RUN echo 'www-data:www-data' | chpasswd \
+    && usermod -s /usr/sbin/nologin www-data
+
+{% include 'template/components/ssh/add_user.sh.twig' with {'user': dev_ssh_user, 'pwd' : dev_ssh_user} %}
+
+
+## ***********************************************************************
+## ADD RESOURCE FILES
+## ***********************************************************************
+ADD ./configs/README.md /var/www/README.m
+
+
+
+{% block php %}
+## ***********************************************************************
+## PHP
+## ***********************************************************************
+{% endblock %}
+
+
+{% block components %}
+## ***********************************************************************
+## CUSTOM COMPONENTS
+## ***********************************************************************
+{% endblock %}
+
+
+{% include 'shared_plugin.sh.twig' %}
+
+
+## ***********************************************************************
+##  CLEAN UP / POST BUILD
+## ***********************************************************************
+
+ADD entrypoint.sh /entrypoint.sh
+RUN chmod 755 /*.sh
+
+
+CMD ["/entrypoint.sh"]

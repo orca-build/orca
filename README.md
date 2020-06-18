@@ -1,29 +1,31 @@
-# README #
+# ORCA
 
-This README would normally document whatever steps are necessary to get your application up and running.
+The Docker Image Generator allows you to define a template
+for your docker image and generate various tags and versions from it.
+This is done by adding blocks and variables for each tag.
 
-### What is this repository for? ###
+Thus you do not have to maintain different and duplicate versions
+of your image. You do only need to adjust what is actually different within certain tags.
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+This command will turn your template into all defined versions
+like `php5.6`, `php7.1` and more:
 
-### How do I get set up? ###
+```ruby
+php orca.phar --directory=xyz
+```
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
 
-### Contribution guidelines ###
+## Quick reference
 
-* Writing tests
-* Code review
-* Other guidelines
+Where to get help: https://www.orca-build.io
 
-### Who do I talk to? ###
+Where to file issues: https://github.com/orca-build/orca
 
-* Repo owner or admin
-* Other community or team contact
+Documentation: https://orca-build.io/docs
+
+Maintained by: dasistweb GmbH (https://www.dasistweb.de)
+
+
+
+## Copying / License
+This repository is distributed under the MIT License (MIT). You can find the whole license text in the [LICENSE](LICENSE) file.

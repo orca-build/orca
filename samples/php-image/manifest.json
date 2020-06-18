@@ -1,0 +1,18 @@
+{
+  "images": {
+    "simple": [
+      "simple:latest"
+    ],
+    "php-image": [
+      "php7.3:php7.3",
+      "php7.4:php7.4",
+      "php7.4:latest"
+    ],
+    "php": [
+      "php7.4:latest"
+    ]
+  },
+  "shared_assets": "template/assets",
+  "shared_variables": "./variables.json",
+  "plugin_directory": "../plugins"
+}

@@ -1,0 +1,13 @@
+{% extends "template/Dockerfile.sh.twig" %}
+
+
+{% block php %}
+{{ parent() }}
+{% include 'template/components/php/7.3/install.sh.twig' %}
+{% endblock %}
+
+
+{% block components %}
+ {{ parent() }}
+{% include 'template/components/filebeat/install.sh.twig' %}
+{% endblock %}
