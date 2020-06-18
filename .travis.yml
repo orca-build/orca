@@ -19,4 +19,4 @@ install:
   - composer show --installed
 
 script:
-  - php ./vendor/bin/phpunit --configuration=phpunit.xml
+  - cd .. && php ./src/vendor/bin/phpunit --configuration=phpunit.xml
