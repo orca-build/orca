@@ -19,7 +19,7 @@ before_script:
   - mkdir -p build/logs
 
 install:
-  - composer install --no-interaction
+  - cd src && composer install --no-interaction
 
 script:
   - ./src/vendor/bin/phpunit --configuration=phpunit.xml
