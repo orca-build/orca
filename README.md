@@ -1,6 +1,6 @@
 # ORCA
 
-[![Build Status](https://img.shields.io/travis/orca-build/orca/master.svg?style=flat-square)](https://travis-ci.org/orca-build/orca)
+[![Build Status](https://travis-ci.org/orca-build/orca.svg?branch=master)](https://travis-ci.org/orca-build/orca)
 [![MIT licensed](https://img.shields.io/github/license/orca-build/orca.svg?style=flat-square)](https://github.com/orca-build/orca/blob/master/LICENSE)
 
 
