@@ -28,6 +28,11 @@ class CommandOptions
      */
     private $image = '';
 
+    /**
+     * @var bool
+     */
+    private $showVersion;
+
 
     /**
      * CommandArguments constructor.
@@ -65,6 +70,10 @@ class CommandOptions
             if ($this->stringStartsWith('--debug', $arg)) {
                 $this->debugMode = true;
             }
+
+            if ($this->stringStartsWith('--version', $arg)) {
+                $this->showVersion = true;
+            }
         }
     }
 
@@ -92,6 +101,14 @@ class CommandOptions
         return $this->debugMode;
     }
 
+    /**
+     * @return bool
+     */
+    public function isShowVersion(): bool
+    {
+        return $this->showVersion;
+    }
+    
 
     /**
      * @param $search

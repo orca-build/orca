@@ -33,6 +33,10 @@ class Orca
      */
     private $directoryService;
 
+    /**
+     *
+     */
+    public const VERSION = "1.1";
 
     /**
      * Orca constructor.
@@ -49,7 +53,7 @@ class Orca
     /**
      * Generates all required Dockerfile artefacts and build files
      * from your Orca sources and variants.
-     * 
+     *
      * @param bool $debugMode
      */
     public function generate(bool $debugMode)

@@ -5,7 +5,7 @@
  */
 class AppManager
 {
-    
+
     /**
      * @param array $arguments
      */
@@ -19,6 +19,13 @@ class AppManager
 
         $rootDir = $config->getProjectDir();
         $absolutePath = (!empty($rootDir)) ? $workingDir . '/' . $rootDir : '';
+
+        if ($config->isShowVersion()) {
+            echo "ORCA Build v" . \Orca\Orca::VERSION . PHP_EOL;
+            echo "Copyright (c) 2020 - 2021 dasistweb GmbH" . PHP_EOL;
+            echo "www.orca-build.io" . PHP_EOL;
+            return;
+        }
 
         $generator = new \Orca\Orca($absolutePath);
         $generator->generate($config->isDebugMode());
