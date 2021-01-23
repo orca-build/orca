@@ -1,6 +1,6 @@
 <?php
 
-namespace Models\Components\Variables;
+namespace Orca\Tests\Models\Components\Variables;
 
 
 use Orca\Components\Variables\Variables;
@@ -47,5 +47,5 @@ class VariablesTest extends TestCase
 
         $this->assertEquals(date("D M d, Y G:i"), $variables['orca']['generate_date']);
     }
-    
+
 }

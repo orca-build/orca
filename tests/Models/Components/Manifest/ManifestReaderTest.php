@@ -1,6 +1,6 @@
 <?php
 
-namespace Models\Components\Manifest;
+namespace Orca\Tests\Models\Components\Manifest;
 
 use Orca\Components\Manifest\ManifestReader;
 use PHPUnit\Framework\TestCase;

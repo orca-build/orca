@@ -13,6 +13,10 @@ help:
 
 build: ## Builds ORCA and creates orca.phar
 	@cd src && composer install --no-dev
+	@echo "===================================================================="
+	@echo "verifying if phar files can be created....phar.readonly has to be OFF"
+	@php -i | grep phar.readonly
+	@php -i | grep "Loaded Configuration" 
 	@php build.php
 
 #------------------------------------------------------------------------------------------------
@@ -21,11 +25,7 @@ install: ## Installs all dev dependencies
 	@cd src && composer install
 
 test: ## Runs all tests
-	@php src/vendor/bin/phpunit --configuration=phpunit.xml
+	@php ./src/vendor/bin/phpunit --configuration=phpunit.xml -v
 
 sample: ## build and creates a new sample image
-	# runs all PHP Unit Tests that are defined
-	# in the phpunit.xml.dist configuration
-	#@cd tests && php phpunit.phar --configuration=phpunit.xml
-	@make build -B
 	@php ./build/orca.phar --directory=./samples/php-image
