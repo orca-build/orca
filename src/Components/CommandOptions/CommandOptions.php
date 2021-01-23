@@ -1,12 +1,17 @@
 <?php
 
-namespace Orca\Components\CommandArguments;
+namespace Orca\Components\CommandOptions;
 
 /**
  * @copyright dasistweb GmbH (http://www.dasistweb.de)
  */
-class CommandArguments
+class CommandOptions
 {
+
+    /**
+     * @var bool
+     */
+    private $debugMode;
 
     /**
      * @var array
@@ -16,7 +21,12 @@ class CommandArguments
     /**
      * @var string
      */
-    private $rootDir = '';
+    private $projectDir = '';
+
+    /**
+     * @var string
+     */
+    private $image = '';
 
 
     /**
@@ -36,13 +46,24 @@ class CommandArguments
      */
     public function load()
     {
-        $this->rootDir = '';
+        $this->projectDir = '';
+
+        $this->debugMode = false;
+
 
         /** @var string $arg */
         while ($arg = array_shift($this->arguments)) {
 
             if ($this->stringStartsWith('--directory=', $arg)) {
-                $this->rootDir = str_replace('--directory=', '', $arg);
+                $this->projectDir = str_replace('--directory=', '', $arg);
+            }
+
+            if ($this->stringStartsWith('--image=', $arg)) {
+                $this->image = str_replace('--image=', '', $arg);
+            }
+
+            if ($this->stringStartsWith('--debug', $arg)) {
+                $this->debugMode = true;
             }
         }
     }
@@ -50,9 +71,25 @@ class CommandArguments
     /**
      * @return string
      */
-    public function getRootDir()
+    public function getProjectDir()
     {
-        return $this->rootDir;
+        return $this->projectDir;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDebugMode()
+    {
+        return $this->debugMode;
     }
 
 

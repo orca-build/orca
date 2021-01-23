@@ -14,14 +14,14 @@ class AppManager
         $cur_dir = explode('\\', getcwd());
         $workingDir = $cur_dir[count($cur_dir) - 1];
 
-        $config = new Orca\Components\CommandArguments\CommandArguments($arguments);
+        $config = new Orca\Components\CommandOptions\CommandOptions($arguments);
         $config->load();
 
-        $rootDir = $config->getRootDir();
+        $rootDir = $config->getProjectDir();
         $absolutePath = (!empty($rootDir)) ? $workingDir . '/' . $rootDir : '';
 
         $generator = new \Orca\Orca($absolutePath);
-        $generator->generate();
+        $generator->generate($config->isDebugMode());
     }
 
 }
