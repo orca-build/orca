@@ -54,6 +54,7 @@ class CommandOptions
         $this->projectDir = '';
 
         $this->debugMode = false;
+        $this->showVersion = false;
 
 
         /** @var string $arg */
