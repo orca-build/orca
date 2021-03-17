@@ -1,0 +1,57 @@
+name: CI Pipeline
+
+on: [push, pull_request]
+
+jobs:
+
+  syntax_checks:
+    name: Syntax Checks | PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: [ '5.6', '7.1', '7.2', '7.3', '7.4' ]
+    steps:
+      - name: Clone Code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+
+      - name: PHP Syntax Checks
+        run: find . -name '*.php' -not -path "./src/vendor/*" -not -path "./tests/*" | xargs -n 1 -P4 php -l
+
+  # ------------------------------------------------------------------------------------------------------------------------
+
+  unit_tests:
+    name: Unit Tests
+    needs: syntax_checks
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Clone Code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: make install -B
+
+      - name: Run PHPUnit
+        run: make test -B
+
+  # ------------------------------------------------------------------------------------------------------------------------
+
+  analyzers:
+    name: Static Analyzers
+    needs: unit_tests
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Clone Code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: make install -B
+
+      - name: Run PHPStan
+        run: make stan -B

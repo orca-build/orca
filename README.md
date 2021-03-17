@@ -1,6 +1,6 @@
 # ORCA
 
-[![Build Status](https://travis-ci.org/orca-build/orca.svg?branch=master)](https://travis-ci.org/orca-build/orca)
+![Build Status](https://github.com/orca-build/orca/actions/workflows/ci_pipe.yml/badge.svg)
 [![MIT licensed](https://img.shields.io/github/license/orca-build/orca.svg?style=flat-square)](https://github.com/orca-build/orca/blob/master/LICENSE)
 
 
