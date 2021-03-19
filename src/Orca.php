@@ -248,6 +248,10 @@ class Orca
      */
     private function compileTag(string $sourceDir, string $targetDir, string $imgName, string $tagName, array $globalVars, Compiler $fileCompiler, array $sharedFiles, bool $debug)
     {
+        if ($debug) {
+            echo "Generating: " . $imgName . ':' . $tagName . PHP_EOL;
+        }
+
         if (!file_exists($sourceDir)) {
             throw new \Exception("No source code found for tag '" . $tagName . PHP_EOL . "Ensure that it exists or remove it from manifest.json");
         }

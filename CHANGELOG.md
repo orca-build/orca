@@ -2,6 +2,13 @@
 
 All notable changes of the ORCA releases are documented in this file using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+
+## [unreleased] 
+
+### Added
+- Added debug output to indicate what image/tag is being generated in case of errors
+
+
 ## [1.1] - 2021-01-23
 
 ### Added
