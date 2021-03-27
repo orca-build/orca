@@ -8,6 +8,6 @@ return PhpCsFixer\Config::create()
     ])
     ->setFinder(
         PhpCsFixer\Finder::create()
-            ->exclude(['.git', '.github', 'Client', 'Resources', 'vendor'])
-            ->in(__DIR__)
+            ->exclude(['./src/vendor'])
+            ->in(__DIR__ . '/src')
     );
