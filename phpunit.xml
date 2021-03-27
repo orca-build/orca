@@ -15,13 +15,13 @@
 
     <testsuites>
         <testsuite name="Orca Test Suite">
-            <directory suffix="Test.php">tests</directory>
+            <directory suffix="Test.php">./tests/phpunit</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src</directory>
+            <directory suffix=".php">./src</directory>
         </whitelist>
     </filter>
 

@@ -1,0 +1,1 @@
+{"baseImage":"ubuntu:18.04","tag":"php7.3","users":{"dev":{"name":"dev7.3"}}}

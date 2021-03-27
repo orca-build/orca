@@ -1,34 +1,26 @@
 <?php
 
-/**
- * @copyright dasistweb GmbH (http://www.dasistweb.de)
- */
+use Orca\Commands\GenerateCommand;
+use Orca\Orca;
+use Symfony\Component\Console\Application;
+
+
 class AppManager
 {
 
     /**
-     * @param array $arguments
+     * @throws Exception
      */
-    public static function run(array $arguments)
+    public static function run(): void
     {
-        $cur_dir = explode('\\', getcwd());
-        $workingDir = $cur_dir[count($cur_dir) - 1];
+        $application = new Application('ORCA', Orca::VERSION);
 
-        $config = new Orca\Components\CommandOptions\CommandOptions($arguments);
-        $config->load();
+        $cmdGenerate = new GenerateCommand();
+        $application->add($cmdGenerate);
 
-        $rootDir = $config->getProjectDir();
-        $absolutePath = (!empty($rootDir)) ? $workingDir . '/' . $rootDir : '';
+        $application->setDefaultCommand($cmdGenerate->getName());
 
-        if ($config->isShowVersion()) {
-            echo "ORCA Build v" . \Orca\Orca::VERSION . PHP_EOL;
-            echo "Copyright (c) 2020 - 2021 dasistweb GmbH" . PHP_EOL;
-            echo "www.orca-build.io" . PHP_EOL;
-            return;
-        }
-
-        $generator = new \Orca\Orca($absolutePath);
-        $generator->generate($config->isDebugMode());
+        $application->run();
     }
 
 }

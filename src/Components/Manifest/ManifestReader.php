@@ -31,7 +31,7 @@ class ManifestReader
             $images,
             $sharedAssets,
             $sharedVariables,
-            $plugins,
+            (string)$plugins,
             $output
         );
     }
@@ -44,10 +44,10 @@ class ManifestReader
     private function getImages(array $data): array
     {
         if (!isset($data['images'])) {
-            return array();
+            return [];
         }
         
-        $list = array();
+        $list = [];
 
         foreach ($data['images'] as $image => $tags) {
 

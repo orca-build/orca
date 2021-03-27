@@ -11,11 +11,14 @@
     "require": {
         "ext-json": "*",
         "php": ">=7.2",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "symfony/console": "*"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "^8.5",
+        "phpstan/phpstan": "^0.12",
+        "friendsofphp/php-cs-fixer": "^2.18"
     },
     "config": {
         "optimize-autoloader": true

@@ -17,7 +17,7 @@ class VariablesTest extends TestCase
     {
         $varBuilder = new Variables('dev', 'latest');
 
-        $variables = $varBuilder->prepareVariables(array());
+        $variables = $varBuilder->prepareVariables([]);
 
         $this->assertEquals('dev', $variables['orca']['image']);
     }
@@ -30,7 +30,7 @@ class VariablesTest extends TestCase
     {
         $varBuilder = new Variables('dev', 'latest');
 
-        $variables = $varBuilder->prepareVariables(array());
+        $variables = $varBuilder->prepareVariables([]);
 
         $this->assertEquals('latest', $variables['orca']['tag']);
     }
@@ -43,7 +43,7 @@ class VariablesTest extends TestCase
     {
         $varBuilder = new Variables('dev', 'latest');
 
-        $variables = $varBuilder->prepareVariables(array());
+        $variables = $varBuilder->prepareVariables([]);
 
         $this->assertEquals(date("D M d, Y G:i"), $variables['orca']['generate_date']);
     }

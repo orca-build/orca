@@ -29,13 +29,13 @@ class ManifestReaderTest extends TestCase
      */
     public function testImagesAndTags()
     {
-        $jsonContent = array(
-            "images" => array(
-                "dev" => array(
+        $jsonContent = [
+            "images" => [
+                "dev" => [
                     "1.2:latest",
-                )
-            ),
-        );
+                ]
+            ],
+        ];
 
         $stringContent = json_encode($jsonContent);
 
@@ -52,9 +52,9 @@ class ManifestReaderTest extends TestCase
      */
     public function testSharedAssets()
     {
-        $jsonContent = array(
+        $jsonContent = [
             "shared_assets" => "template/assets",
-        );
+        ];
 
         $stringContent = json_encode($jsonContent);
 
@@ -69,9 +69,9 @@ class ManifestReaderTest extends TestCase
      */
     public function testSharedVariables()
     {
-        $jsonContent = array(
+        $jsonContent = [
             "shared_variables" => "./variables.json",
-        );
+        ];
 
         $stringContent = json_encode($jsonContent);
 
@@ -86,9 +86,9 @@ class ManifestReaderTest extends TestCase
      */
     public function testPluginDirectory()
     {
-        $jsonContent = array(
+        $jsonContent = [
             "plugin_directory" => "../plugins",
-        );
+        ];
 
         $stringContent = json_encode($jsonContent);
 
@@ -103,9 +103,9 @@ class ManifestReaderTest extends TestCase
      */
     public function testOutputDirectory()
     {
-        $jsonContent = array(
+        $jsonContent = [
             "output" => "./output",
-        );
+        ];
 
         $stringContent = json_encode($jsonContent);
 
@@ -121,7 +121,7 @@ class ManifestReaderTest extends TestCase
      */
     public function testDefaultOutputDirectory()
     {
-        $jsonContent = array();
+        $jsonContent = [];
 
         $stringContent = json_encode($jsonContent);
 

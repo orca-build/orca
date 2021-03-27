@@ -11,21 +11,36 @@ help:
 
 #------------------------------------------------------------------------------------------------
 
-build: ## Builds ORCA and creates orca.phar
+install: ## Installs all prod dependencies
 	@cd src && composer install --no-dev
-	@echo "===================================================================="
-	@echo "verifying if phar files can be created....phar.readonly has to be OFF"
-	@php -i | grep phar.readonly
-	@php -i | grep "Loaded Configuration" 
-	@php build.php
+
+dev: ## Installs all dev dependencies
+	@cd src && composer install
 
 #------------------------------------------------------------------------------------------------
 
-install: ## Installs all dev dependencies
-	@cd src && composer install
+csfix: ## Starts the PHP CS Fixer
+	@php ./src/vendor/bin/php-cs-fixer fix --config=./.php_cs.php --dry-run
+
+stan: ## Starts the PHPStan Analyser
+	@php ./src/vendor/bin/phpstan analyse -c ./.phpstan.neon
 
 test: ## Runs all tests
-	@php ./src/vendor/bin/phpunit --configuration=phpunit.xml -v
+	@php ./src/vendor/bin/phpunit --configuration=./phpunit.xml
 
-sample: ## build and creates a new sample image
-	@php ./build/orca.phar --directory=./samples/php-image
+#------------------------------------------------------------------------------------------------
+
+pr: ## Runs and prepares everything for a pull request
+	@php ./src/vendor/bin/php-cs-fixer fix --config=./.php_cs.php
+	@make test -B
+	@make stan -B
+
+#------------------------------------------------------------------------------------------------
+
+build: ## Builds ORCA and creates orca.phar
+	@make install -B
+	@echo "===================================================================="
+	@echo "verifying if phar files can be created....phar.readonly has to be OFF"
+	@php -i | grep phar.readonly
+	@php -i | grep "Loaded Configuration"
+	@php build.php

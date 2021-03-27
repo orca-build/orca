@@ -1,0 +1,13 @@
+version: "3.0"
+
+
+services:
+
+  build:
+    container_name: dev
+    image: php:7.2
+    volumes:
+      - "../:/app"
+    entrypoint:
+      - /bin/sh
+      - "/app/docker/boot.sh"

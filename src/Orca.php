@@ -19,6 +19,11 @@ class Orca
 {
 
     /**
+     *
+     */
+    public const VERSION = "1.2";
+
+    /**
      * @var string
      */
     private $rootDir;
@@ -33,17 +38,12 @@ class Orca
      */
     private $directoryService;
 
-    /**
-     *
-     */
-    public const VERSION = "1.1";
 
     /**
      * Orca constructor.
-     *
-     * @param $rootDir
+     * @param string $rootDir
      */
-    public function __construct($rootDir)
+    public function __construct(string $rootDir)
     {
         $this->rootDir = $rootDir;
         $this->directoryService = new DirectoryService();
@@ -55,164 +55,99 @@ class Orca
      * from your Orca sources and variants.
      *
      * @param bool $debugMode
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public function generate(bool $debugMode)
     {
-        try {
+        echo '  ____  _____   _____' . PHP_EOL;
+        echo ' / __ \|  __ \ / ____|   /\ ' . PHP_EOL;
+        echo '| |  | | |__) | |       /  \ ' . PHP_EOL;
+        echo '| |  | |  _  /| |      / /\ \ ' . PHP_EOL;
+        echo '| |__| | | \ \| |____ / ____ \ ' . PHP_EOL;
+        echo ' \____/|_|  \_\\______/_/    \_\ ' . PHP_EOL;
+        echo '' . PHP_EOL;
 
-            echo '' . PHP_EOL;
-            echo '' . PHP_EOL;
-            echo '  ____  _____   _____' . PHP_EOL;
-            echo ' / __ \|  __ \ / ____|   /\ ' . PHP_EOL;
-            echo '| |  | | |__) | |       /  \ ' . PHP_EOL;
-            echo '| |  | |  _  /| |      / /\ \ ' . PHP_EOL;
-            echo '| |__| | | \ \| |____ / ____ \ ' . PHP_EOL;
-            echo ' \____/|_|  \_\\_____/_/    \_\ ' . PHP_EOL;
-            echo '' . PHP_EOL;
+        $configReader = new ManifestReader();
 
-            $configReader = new ManifestReader();
+        $configFile = $this->rootDir . '/manifest.json';
 
-            $configFile = $this->rootDir . '/manifest.json';
+        if (!file_exists($configFile)) {
+            throw new \Exception('ConfigFile not found in Image path');
+        }
 
-            if (!file_exists($configFile)) {
-                throw new \Exception('ConfigFile not found in Image path');
+        # now read our configuration and
+        # create a new configuration object
+        $manifestContent = file_get_contents($configFile);
+        $this->manifest = $configReader->readManifest($manifestContent);
+
+
+        $compileRoot = $this->getCompileRoot();
+
+        echo ">> cleaning compile directory...\n";
+        if (file_exists($compileRoot)) {
+            $this->directoryService->deleteDirectory($compileRoot);
+        }
+
+        $this->directoryService->createDirectory($compileRoot);
+
+        $templateRoot = "{$this->rootDir}/template";
+
+
+        $templateFolders = [
+            $templateRoot . '/..',
+        ];
+
+        if (!empty($this->manifest->getPluginFolder())) {
+            $templateFolders[] = $this->rootDir . '/' . $this->manifest->getPluginFolder();
+        }
+
+        $fileCompiler = new Compiler($templateFolders);
+
+
+        $sharedFiles = [];
+
+        # add shared assets if existing
+        if (!empty($this->manifest->getSharedAssets())) {
+            $assetsCollector = new FileCollector($templateRoot . '/../' . $this->manifest->getSharedAssets());
+            $sharedFiles = $assetsCollector->collectFiles();
+        }
+
+
+        $globalVariables = [];
+
+        if (!empty($this->manifest->getSharedVariables())) {
+            $globalVariables = json_decode(file_get_contents($this->rootDir . '/' . $this->manifest->getSharedVariables()), true);
+        }
+
+        if ($globalVariables === null) {
+            $globalVariables = [];
+        }
+
+        echo ">> generating images and tags...\n";
+        foreach ($this->manifest->getImages() as $image) {
+
+            /** @var Tag $tag */
+            foreach ($image->getTags() as $tag) {
+
+                $sourceDir = "{$this->rootDir}/variants/" . $tag->getSourceName();
+                $targetDir = $this->getImageTargetDir($image, $tag);
+
+                $this->compileTag(
+                    $sourceDir,
+                    $targetDir,
+                    $image->getName(),
+                    $tag->getTargetName(),
+                    $globalVariables,
+                    $fileCompiler,
+                    $sharedFiles,
+                    $debugMode
+                );
             }
-
-            # now read our configuration and
-            # create a new configuration object
-            $manifestContent = file_get_contents($configFile);
-            $this->manifest = $configReader->readManifest($manifestContent);
-
-
-            $compileRoot = $this->getCompileRoot();
-
-            echo ">> cleaning compile directory...\n";
-            if (file_exists($compileRoot)) {
-                $this->directoryService->deleteDirectory($compileRoot);
-            }
-
-            $this->directoryService->createDirectory($compileRoot);
-
-            $templateRoot = "{$this->rootDir}/template";
-
-
-            $templateFolders = array(
-                $templateRoot . '/..',
-            );
-
-            if (!empty($this->manifest->getPluginFolder())) {
-                $templateFolders[] = $this->rootDir . '/' . $this->manifest->getPluginFolder();
-            }
-
-            $fileCompiler = new Compiler($templateFolders);
-
-
-            $sharedFiles = array();
-            # add shared assets if existing
-            if (!empty($this->manifest->getSharedAssets())) {
-                $assetsCollector = new FileCollector($templateRoot . '/../' . $this->manifest->getSharedAssets());
-                $sharedFiles = $assetsCollector->collectFiles();
-            }
-
-            /** @var array $globalVariables */
-            $globalVariables = array();
-
-            if (!empty($this->manifest->getSharedVariables())) {
-                $globalVariables = json_decode(file_get_contents($this->rootDir . '/' . $this->manifest->getSharedVariables()), true);
-            }
-
-            if ($globalVariables === null) {
-                $globalVariables = array();
-            }
-
-            echo ">> generating images and tags...\n";
-            /** @var Image $image */
-            foreach ($this->manifest->getImages() as $image) {
-
-                /** @var Tag $tag */
-                foreach ($image->getTags() as $tag) {
-
-                    $sourceDir = "{$this->rootDir}/variants/" . $tag->getSourceName();
-                    $targetDir = $this->getImageTargetDir($image, $tag);
-
-                    $this->compileTag(
-                        $sourceDir,
-                        $targetDir,
-                        $image->getName(),
-                        $tag->getTargetName(),
-                        $globalVariables,
-                        $fileCompiler,
-                        $sharedFiles,
-                        $debugMode
-                    );
-
-                }
-            }
-
-            echo PHP_EOL;
-            echo "AWESOME!" . PHP_EOL;
-            echo "Docker files generated successfully!" . PHP_EOL;
-
-        } catch (\Exception $ex) {
-
-            echo "********* ERROR *********\n>> " . $ex->getMessage();
         }
     }
 
-    /**
-     * Builds a generated Docker project that has previously
-     * been generated by Orca sources.
-     */
-    public function build($buildImage)
-    {
-        try {
-            foreach ($this->manifest->getImages() as $image) {
-
-                /** @var Tag $tag */
-                foreach ($image->getTags() as $tag) {
-
-                    $imgName = $image->getName() . ':' . $tag->getTargetName();
-
-                    if (!empty($buildImage) && ($imgName !== $buildImage)) {
-                        continue;
-                    }
-
-                    $targetDir = $this->getImageTargetDir($image, $tag);
-
-                    passthru('cd ' . $targetDir . ' && docker build --tag ' . $imgName . ' . ', $returnValue);
-                }
-            }
-        } catch (\Exception $ex) {
-            echo "********* ERROR *********\n>> " . $ex->getMessage();
-        }
-    }
-
-    /**
-     * Ships locally generated images by using the
-     * manifest image names of your variants.
-     * In short: it just pushes all to the Docker registry.
-     */
-    public function ship($shipImage)
-    {
-        try {
-            foreach ($this->manifest->getImages() as $image) {
-
-                /** @var Tag $tag */
-                foreach ($image->getTags() as $tag) {
-
-                    $imgName = $image->getName() . ':' . $tag->getTargetName();
-
-                    if (!empty($shipImage) && ($imgName !== $shipImage)) {
-                        continue;
-                    }
-
-                    passthru('docker push ' . $imgName, $returnValue);
-                }
-            }
-        } catch (\Exception $ex) {
-            echo "********* ERROR *********\n>> " . $ex->getMessage();
-        }
-    }
 
     /**
      * @return string
@@ -223,15 +158,14 @@ class Orca
     }
 
     /**
-     * @param $image
-     * @param $tag
+     * @param Image $image
+     * @param Tag $tag
      * @return string
      */
-    private function getImageTargetDir($image, $tag)
+    private function getImageTargetDir(Image $image, Tag $tag): string
     {
         return $this->getCompileRoot() . '/' . $image->getName() . '/' . $tag->getTargetName();
     }
-
 
     /**
      * @param string $sourceDir
@@ -262,7 +196,7 @@ class Orca
             /** @var array $variables */
             $variables = json_decode(file_get_contents($sourceDir . '/variables.json'), true);
         } else {
-            $variables = array();
+            $variables = [];
         }
 
         $this->directoryService->createDirectory($targetDir);

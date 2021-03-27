@@ -51,18 +51,18 @@ class Compiler
             $filename = str_replace($dir, '', $filename);
         }
 
-        if ($this->endsWith($filename, 'variables.json')) {
+        if ($this->endsWith((string)$filename, 'variables.json')) {
 
             # that's our config,
             # skip that
             return;
         }
 
-        $options = array(
+        $options = [
             'cache' => false,
             'debug' => false,
             'strict_variables' => true,
-        );
+        ];
 
         $twig = new Environment($loader, $options);
 
@@ -91,11 +91,11 @@ class Compiler
     }
 
     /**
-     * @param $haystack
-     * @param $needle
+     * @param string $haystack
+     * @param string $needle
      * @return bool
      */
-    private function endsWith($haystack, $needle)
+    private function endsWith(string $haystack, string $needle): bool
     {
         $length = strlen($needle);
         if ($length == 0) {

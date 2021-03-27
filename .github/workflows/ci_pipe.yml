@@ -33,6 +33,11 @@ jobs:
       - name: Clone Code
         uses: actions/checkout@v2
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+
       - name: Install Dependencies
         run: make install -B
 
@@ -41,8 +46,8 @@ jobs:
 
   # ------------------------------------------------------------------------------------------------------------------------
 
-  analyzers:
-    name: Static Analyzers
+  phpstan:
+    name: PHPStan Analyzer
     needs: unit_tests
     runs-on: ubuntu-latest
     steps:
@@ -50,8 +55,33 @@ jobs:
       - name: Clone Code
         uses: actions/checkout@v2
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+
       - name: Install Dependencies
-        run: make install -B
+        run: make dev -B
 
       - name: Run PHPStan
         run: make stan -B
+
+  phpcsfixer:
+    name: PHP CS Fixer
+    needs: phpstan
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Clone Code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+
+      - name: Install Dependencies
+        run: make dev -B
+
+      - name: Run PHP CS Fixer
+        run: make csfix -B

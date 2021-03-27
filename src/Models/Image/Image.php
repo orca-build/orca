@@ -17,7 +17,7 @@ class Image
     /**
      * @var Tag[]
      */
-    private $tags = array();
+    private $tags = [];
 
 
     /**
@@ -39,7 +39,7 @@ class Image
     /**
      * @param Tag $tag
      */
-    public function addTag(Tag $tag)
+    public function addTag(Tag $tag): void
     {
         $this->tags[] = $tag;
     }

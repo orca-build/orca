@@ -28,7 +28,7 @@ class Manifest
     private $sharedVariables;
 
     /**
-     * @var
+     * @var string
      */
     private $pluginFolder;
 
@@ -40,14 +40,13 @@ class Manifest
 
     /**
      * Manifest constructor.
-     *
-     * @param Image[] $images
+     * @param array $images
      * @param string $sharedAssets
      * @param string $sharedVariables
-     * @param $pluginFolder
+     * @param string $pluginFolder
      * @param string $distFolder
      */
-    public function __construct(array $images, string $sharedAssets, string $sharedVariables, $pluginFolder, string $distFolder)
+    public function __construct(array $images, string $sharedAssets, string $sharedVariables, string $pluginFolder, string $distFolder)
     {
         $this->images = $images;
         $this->sharedAssets = $sharedAssets;

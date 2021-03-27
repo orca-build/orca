@@ -22,11 +22,10 @@ class FileCollector
 
 
     /**
-     * DirectoyService constructor.
-     *
-     * @param $basePath
+     * FileCollector constructor.
+     * @param string $basePath
      */
-    public function __construct($basePath)
+    public function __construct(string $basePath)
     {
         $this->basePath = $basePath;
     }
@@ -39,7 +38,7 @@ class FileCollector
     {
         $files = $this->searchFiles('/');
 
-        $result = array();
+        $result = [];
 
         foreach ($files as $file) {
 
@@ -61,16 +60,15 @@ class FileCollector
     }
 
     /**
-     * Finds all files within all subfolders of the specified file type.
+     * Finds all files within all sub folders of the specified file type.
      * e.g. search for all .pid files by providing '.pid' as file type.
      *
-     * @param $dir
-     * @param $fileType
+     * @param string $dir
      * @return array
      */
-    private function searchFiles($dir)
+    private function searchFiles(string $dir): array
     {
-        $this->searchedFiles = array();
+        $this->searchedFiles = [];
 
         $this->recSearchFiles($this->basePath . $dir);
 
@@ -82,10 +80,9 @@ class FileCollector
      * This is the private recursive function to search files within
      * a subdirectory structure.
      *
-     * @param $dir
-     * @param $fileType
+     * @param string $dir
      */
-    private function recSearchFiles($dir)
+    private function recSearchFiles(string $dir): void
     {
         $ffs = scandir($dir);
 
@@ -101,6 +98,5 @@ class FileCollector
             }
         }
     }
-
 
 }

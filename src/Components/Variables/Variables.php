@@ -34,11 +34,11 @@ class Variables
      */
     public function prepareVariables(array $originalVariables): array
     {
-        $originalVariables['orca'] = array(
+        $originalVariables['orca'] = [
             'image' => $this->image,
             'tag' => $this->tag,
             'generate_date' => date("D M d, Y G:i"),
-        );
+        ];
 
         return $originalVariables;
     }
