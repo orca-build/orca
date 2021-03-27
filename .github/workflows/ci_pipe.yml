@@ -39,7 +39,7 @@ jobs:
           php-version: 7.4
 
       - name: Install Dependencies
-        run: make install -B
+        run: make dev -B
 
       - name: Run PHPUnit
         run: make test -B
