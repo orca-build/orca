@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------------------------
 
 help:
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 #------------------------------------------------------------------------------------------------
 
@@ -44,3 +44,6 @@ build: ## Builds ORCA and creates orca.phar
 	@php -i | grep phar.readonly
 	@php -i | grep "Loaded Configuration"
 	@php build.php
+
+pack: ## Builds the ORCA Docker image
+	@cd ./build && DOCKER_BUILDKIT=1 docker build --no-cache -t orcabuilder/orca:latest .

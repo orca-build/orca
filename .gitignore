@@ -3,6 +3,7 @@
 .phpunit.result.cache
 
 /build/
+
 /src/vendor/
 
 /samples/php-image/dist
