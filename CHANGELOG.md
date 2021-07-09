@@ -3,9 +3,10 @@
 All notable changes of the ORCA releases are documented in this file using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 
-## [unreleased] 
+## [1.2] - 2021-07-09
 
 ### Added
+- Added twig functions to compare version strings (version_gt, version_gte, version_lt, version_lte)
 - Added debug output to indicate what image/tag is being generated in case of errors
 
 

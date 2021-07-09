@@ -25,6 +25,12 @@ If you're ready, just execute this command:
 php orca.phar --directory=xyz
 ```
 
+You can also use the available Docker image:
+
+```ruby 
+# generates from the current directory (pwd)
+docker run -v ${PWD}:/opt/project orcabuilder/orca:latest
+```
 
 
 ## Quick reference
