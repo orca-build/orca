@@ -25,6 +25,7 @@ class TwigVersionCompare extends AbstractExtension
         ];
     }
 
+
     /**
      * @param string $versionA
      * @param string $versionB
@@ -68,7 +69,7 @@ class TwigVersionCompare extends AbstractExtension
     /**
      * @param string $versionA
      * @param string $versionB
-     * @return bool|int
+     * @return int
      */
     private function compare(string $versionA, string $versionB)
     {

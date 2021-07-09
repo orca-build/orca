@@ -10,4 +10,4 @@ services:
       - "../:/app"
     entrypoint:
       - /bin/sh
-      - "/app/docker/boot.sh"
+      - "/app/dev/boot.sh"
