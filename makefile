@@ -46,4 +46,6 @@ build: ## Builds ORCA and creates orca.phar
 	@php build.php
 
 pack: ## Builds the ORCA Docker image
-	@cd ./build && DOCKER_BUILDKIT=1 docker build --no-cache -t orcabuilder/orca:latest .
+	@cp ./build/orca.phar ./build_docker/orca.phar
+	@cp ./build/README.md ./build_docker/README.md
+	@cd ./build_docker && DOCKER_BUILDKIT=1 docker build --no-cache -t orcabuilder/orca:latest .

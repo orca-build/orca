@@ -7,3 +7,5 @@
 /src/vendor/
 
 /samples/php-image/dist
+/build_docker/README.md
+/build_docker/orca.phar
