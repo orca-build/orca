@@ -3,6 +3,7 @@
 namespace Orca\Components\Compiler;
 
 use Orca\Services\Directory\DirectoryService;
+use Orca\Services\Twig\Extension\TwigVersionCompare;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -65,6 +66,8 @@ class Compiler
         ];
 
         $twig = new Environment($loader, $options);
+
+        $twig->addExtension(new TwigVersionCompare());
 
 
         $outputFile = str_replace('Dockerfile.sh.twig', 'Dockerfile', $outputFile);
