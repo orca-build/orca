@@ -2,6 +2,11 @@
 
 All notable changes of the ORCA releases are documented in this file using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [1.3] - 2024-04-20
+
+### Changed
+- Updated dependecies
+
 
 ## [1.2] - 2021-07-09
 
