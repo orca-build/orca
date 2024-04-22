@@ -21,7 +21,7 @@ class Orca
     /**
      *
      */
-    public const VERSION = "1.2";
+    public const VERSION = "1.3";
 
     /**
      * @var string

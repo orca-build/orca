@@ -14,6 +14,7 @@ help:
 install: ## Installs all prod dependencies
 	@cd src && composer install --no-dev
 
+.PHONY: dev
 dev: ## Installs all dev dependencies
 	@cd src && composer install
 
@@ -37,6 +38,7 @@ pr: ## Runs and prepares everything for a pull request
 
 #------------------------------------------------------------------------------------------------
 
+.PHONY: build
 build: ## Builds ORCA and creates orca.phar
 	@make install -B
 	@echo "===================================================================="
